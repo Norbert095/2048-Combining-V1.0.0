@@ -183,10 +183,10 @@
         .cell-2048 { background: #edc22e; color: #f9f6f2; }
         .cell-4096 { background: #3c3a32; color: #f9f6f2; }
         .cell-8192 { background: #3c3a32; color: #f9f6f2; }
-        .cell-16384 { background: #3c3a32; color: #f9f6f2; }
+        .cell-16384 { background: #ff6347; color: #f9f6f2; font-weight: 900; }
         .cell-32768 { background: #3c3a32; color: #f9f6f2; }
         .cell-65536 { background: #3c3a32; color: #f9f6f2; }
-        .cell-131072 { background: #3c3a32; color: #f9f6f2; }
+        .cell-131072 { background: #00ff00; color: #000; font-weight: 900; }
         .cell-262144 { background: #ff0000; color: #f9f6f2; }
         .cell-524288 { background: #ff0000; color: #f9f6f2; }
         .cell-1048576 { background: #ff0000; color: #f9f6f2; }
@@ -197,6 +197,84 @@
         .cell-33554432 { background: #ff0000; color: #f9f6f2; }
         .cell-67108864 { background: #ff0000; color: #f9f6f2; }
         .cell-134217728 { background: #ffd700; color: #000; font-weight: 900; }
+        .cell-268435456 { background: #00ffff; color: #000; font-weight: 900; }
+        .cell-536870912 { background: #ff00ff; color: #fff; font-weight: 900; }
+        .cell-1073741824 { background: #00ff00; color: #000; font-weight: 900; }
+        .cell-2147483648 { background: #0000ff; color: #fff; font-weight: 900; }
+        .cell-4294967296 { 
+            background: linear-gradient(135deg, #ffd700 0%, #ff0000 50%, #ffd700 100%);
+            color: #000;
+            font-weight: 900;
+            animation: victory-glow 1s infinite;
+            border: 3px solid #fff;
+        }
+        .cell-8589934592 { background: #9400d3; color: #fff; font-weight: 900; }
+        .cell-17179869184 { background: #4b0082; color: #fff; font-weight: 900; }
+        .cell-34359738368 { background: #0000cd; color: #fff; font-weight: 900; }
+        .cell-68719476736 { background: #008b8b; color: #fff; font-weight: 900; }
+        .cell-137438953472 { background: #006400; color: #fff; font-weight: 900; }
+        .cell-274877906944 { background: #8b0000; color: #fff; font-weight: 900; }
+        .cell-549755813888 { background: #ff1493; color: #fff; font-weight: 900; }
+        .cell-1099511627776 { 
+            background: linear-gradient(135deg, #000 0%, #ffd700 25%, #ff00ff 50%, #00ffff 75%, #000 100%);
+            color: #fff;
+            font-weight: 900;
+            animation: ultimate-glow 2s infinite;
+            border: 4px solid #ffd700;
+            box-shadow: 0 0 30px #ff00ff;
+        }
+        
+        @keyframes ultimate-glow {
+            0% { box-shadow: 0 0 30px #ff00ff; }
+            33% { box-shadow: 0 0 40px #00ffff; }
+            66% { box-shadow: 0 0 40px #ffd700; }
+            100% { box-shadow: 0 0 30px #ff00ff; }
+        }
+        
+        .secret-goal {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            font-size: 14px;
+            border: 2px solid #ffd700;
+            display: none;
+        }
+        
+        .secret-goal.revealed {
+            display: block;
+            animation: reveal-secret 1s ease-out;
+        }
+        
+        @keyframes reveal-secret {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes victory-glow {
+            0%, 100% { box-shadow: 0 0 20px #ffd700; }
+            50% { box-shadow: 0 0 40px #ff0000; }
+        }
+        .cell-eggium { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%, #f093fb 100%);
+            color: #fff;
+            font-weight: 900;
+            animation: eggium-glow 2s infinite;
+            border: 2px solid #ffd700;
+        }
+        
+        @keyframes eggium-glow {
+            0%, 100% { box-shadow: 0 0 10px #667eea; }
+            50% { box-shadow: 0 0 20px #f093fb; }
+        }
         
         .save-indicator {
             position: fixed;
@@ -208,6 +286,9 @@
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
+            max-width: 400px;
+            text-align: center;
+            z-index: 9999;
         }
         
         .save-indicator.show {
@@ -241,11 +322,12 @@
     
     <div class="header">
         <h1>2048 Mega Grid</h1>
-        <div class="subtitle">16x16 Grid - Goal: 134,217,728</div>
+        <div class="subtitle">16x16 Grid - Goal: 4,294,967,296</div>
     </div>
     
     <div class="instructions">
-        🖱️ Drag tiles to move them | Drop on same number to merge | Use "Add Number 2" button to spawn new tiles
+        🖱️ Drag tiles to move them | Drop on same number to merge | Use "Add Number 2" button to spawn new tiles<br>
+        🥚 SPECIAL: Eggium Cube + 2048 = 131,072!
     </div>
     
     <div class="controls">
@@ -257,7 +339,7 @@
     
     <div class="progress-container">
         <div class="progress-label">
-            <span>Progress to 134,217,728</span>
+            <span>Progress to 4,294,967,296</span>
             <span id="progressPercent">0%</span>
         </div>
         <div class="progress-bar">
@@ -265,6 +347,19 @@
         </div>
         <div style="margin-top: 10px; font-size: 12px; opacity: 0.8;">
             Highest Tile: <span id="highestTile">0</span>
+        </div>
+    </div>
+    
+    <div class="secret-goal" id="secretGoal">
+        <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">
+            🌟 SECRET GOAL UNLOCKED! 🌟
+        </div>
+        <div class="progress-label">
+            <span>Ultimate Challenge: 1,099,511,627,776</span>
+            <span id="secretProgressPercent">0%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="secretProgressFill" style="background: linear-gradient(90deg, #ff00ff 0%, #00ffff 100%);">0%</div>
         </div>
     </div>
     
@@ -278,7 +373,7 @@
             size: 16,
             score: 0,
             bestScore: 0,
-            targetValue: 134217728,
+            targetValue: 4294967296,
             draggedElement: null,
             draggedRow: null,
             draggedCol: null,
@@ -373,15 +468,30 @@
                     return;
                 }
                 
+                // Special case: Eggium + 2048 = 131,072
+                if ((draggedValue === 'eggium' && targetValue === 2048) || 
+                    (draggedValue === 2048 && targetValue === 'eggium')) {
+                    this.grid[targetRow][targetCol] = 131072;
+                    this.grid[this.draggedRow][this.draggedCol] = 0;
+                    this.score += 131072;
+                    this.showMessage('🥚✨ EGGIUM FUSION! Created 131,072!');
+                    
+                    if (this.score > this.bestScore) {
+                        this.bestScore = this.score;
+                    }
+                    
+                    this.render();
+                    this.saveGame();
+                }
                 // If target is empty, just move the tile
-                if (targetValue === 0) {
+                else if (targetValue === 0) {
                     this.grid[targetRow][targetCol] = draggedValue;
                     this.grid[this.draggedRow][this.draggedCol] = 0;
                     this.render();
                     this.saveGame();
                 }
                 // If target has same value, merge them
-                else if (targetValue === draggedValue) {
+                else if (targetValue === draggedValue && typeof draggedValue === 'number') {
                     this.grid[targetRow][targetCol] = draggedValue * 2;
                     this.grid[this.draggedRow][this.draggedCol] = 0;
                     this.score += draggedValue * 2;
@@ -420,10 +530,57 @@
                 
                 if (empty.length > 0) {
                     const [row, col] = empty[Math.floor(Math.random() * empty.length)];
-                    this.grid[row][col] = 2;
+                    
+                    // Determine what value to spawn based on probability
+                    const rand = Math.random();
+                    let value = 2;
+                    let msg = '';
+                    
+                    if (rand < 1/2000000) {
+                        value = 'eggium';
+                        msg = '🥚💎 ULTRA MEGA RARE! EGGIUM CUBE! (1 in 2,000,000) - Combine with 2048 = 131,072!';
+                    } else if (rand < 1/1000000) {
+                        value = 16384;
+                        msg = '💥 LEGENDARY! 16,384 spawned! (1 in 1,000,000)';
+                    } else if (rand < 1/50000) {
+                        value = 2048;
+                        msg = '🎉 JACKPOT! 2048 spawned! (1 in 50,000)';
+                    } else if (rand < 1/1000) {
+                        value = 256;
+                        msg = '🌟 RARE! 256 spawned! (1 in 1,000)';
+                    } else if (rand < 1/30) {
+                        value = 16;
+                        msg = '✨ Lucky! 16 spawned! (1 in 30)';
+                    } else if (rand < 1/8) {
+                        value = 4;
+                        msg = '⭐ Nice! 4 spawned! (1 in 8)';
+                    }
+                    
+                    this.grid[row][col] = value;
+                    
+                    // Show message if rare spawn
+                    if (msg) {
+                        this.showMessage(msg);
+                    }
+                    
                     this.render();
                     this.saveGame();
                 }
+            },
+            
+            showMessage(text) {
+                const indicator = document.getElementById('saveIndicator');
+                indicator.textContent = text;
+                indicator.style.background = 'rgba(255, 215, 0, 0.9)';
+                indicator.classList.add('show');
+                const displayTime = text.includes('VICTORY') || text.includes('ULTIMATE') ? 5000 : 3000;
+                setTimeout(() => {
+                    indicator.classList.remove('show');
+                    setTimeout(() => {
+                        indicator.textContent = 'Auto-saved!';
+                        indicator.style.background = 'rgba(0,255,0,0.8)';
+                    }, 300);
+                }, displayTime);
             },
             
             render() {
@@ -436,8 +593,14 @@
                             cell.textContent = '';
                             cell.className = 'cell';
                             cell.draggable = false;
+                        } else if (value === 'eggium') {
+                            cell.textContent = '🥚';
+                            cell.className = 'cell cell-eggium';
+                            cell.draggable = true;
                         } else {
-                            if (value >= 1000000) {
+                            if (value >= 1000000000) {
+                                cell.textContent = Math.floor(value/1000000000) + 'B';
+                            } else if (value >= 1000000) {
                                 cell.textContent = Math.floor(value/1000000) + 'M';
                             } else if (value >= 1000) {
                                 cell.textContent = Math.floor(value/1000) + 'k';
@@ -459,18 +622,41 @@
                 const highest = this.getHighestTile();
                 document.getElementById('highestTile').textContent = highest.toLocaleString();
                 
+                // Main progress bar
                 const progress = Math.min(100, (Math.log2(highest) / Math.log2(this.targetValue)) * 100);
                 document.getElementById('progressPercent').textContent = progress.toFixed(2) + '%';
                 document.getElementById('progressFill').style.width = progress + '%';
                 document.getElementById('progressFill').textContent = progress.toFixed(1) + '%';
+                
+                // Check if victory achieved and reveal secret goal
+                if (highest >= 4294967296) {
+                    const secretGoal = document.getElementById('secretGoal');
+                    if (!secretGoal.classList.contains('revealed')) {
+                        secretGoal.classList.add('revealed');
+                        this.showMessage('🎊 VICTORY! SECRET GOAL UNLOCKED: Reach 1,099,511,627,776! 🎊');
+                    }
+                    
+                    // Update secret progress bar
+                    const secretTarget = 1099511627776;
+                    const secretProgress = Math.min(100, (Math.log2(highest) / Math.log2(secretTarget)) * 100);
+                    document.getElementById('secretProgressPercent').textContent = secretProgress.toFixed(2) + '%';
+                    document.getElementById('secretProgressFill').style.width = secretProgress + '%';
+                    document.getElementById('secretProgressFill').textContent = secretProgress.toFixed(1) + '%';
+                    
+                    // Check if ultimate goal reached
+                    if (highest >= 1099511627776) {
+                        this.showMessage('👑 ULTIMATE VICTORY! You reached 1,099,511,627,776! You are a TRUE LEGEND! 👑');
+                    }
+                }
             },
             
             getHighestTile() {
                 let max = 0;
                 for (let i = 0; i < this.size; i++) {
                     for (let j = 0; j < this.size; j++) {
-                        if (this.grid[i][j] > max) {
-                            max = this.grid[i][j];
+                        const value = this.grid[i][j];
+                        if (typeof value === 'number' && value > max) {
+                            max = value;
                         }
                     }
                 }
